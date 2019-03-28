@@ -15,8 +15,8 @@ class UserController {
             email,
             password,
             username
-        });
-        return user;
+        });                
+        return this.login(...arguments);
     }
 }
 
