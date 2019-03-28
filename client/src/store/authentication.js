@@ -10,11 +10,13 @@ export default {
         registerError: null,
         token: null
     },
+    getters: {
+        isLoggedIn(state) {
+            return !!state.token
+        }
+    },
     mutations: {
-        setRegisterErrorNull(state) {
-            state.registerError = null
-        },
-        setRegisterError(state, error) {            
+        setRegisterError(state, error) {
             state.registerError = error
         },
         setToken(state, token) {
@@ -31,7 +33,12 @@ export default {
         }
     },
     actions: {
+        logout({ commit }) {
+            commit('setToken', null)
+            router.push('/login')
+        },
         register({ commit, state }) {
+            commit('setRegisterError', null)
             return http().post('/auth/register', {
                 email: state.registerEmail,
                 username: state.registerLogin,
@@ -40,8 +47,6 @@ export default {
                 commit('setToken', data.token)
                 router.push('/')
             }).catch(() => {
-                commit('setRegisterErrorNull')
-            }).then(() => {
                 commit('setRegisterError', 'Account is already exist.')
             })
         }

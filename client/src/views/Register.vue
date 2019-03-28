@@ -106,8 +106,7 @@ export default {
     ...mapMutations("Authentication", [
       "setRegisterEmail",
       "setRegisterPassword",
-      "setRegisterLogin",
-      "setRegisterError"
+      "setRegisterLogin"    
     ]),
     ...mapActions("Authentication", ["register"]),
     validError() {
