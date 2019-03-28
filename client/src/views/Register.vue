@@ -23,7 +23,6 @@
                 label="Login"
                 required
                 :rules="loginRules"
-                :value="registerLogin"
                 @input="setRegisterLogin"
               ></v-text-field>
               <v-text-field
@@ -32,7 +31,6 @@
                 :rules="emailRules"
                 label="E-mail"
                 required
-                :value="registerEmail"
                 @input="setRegisterEmail"
               ></v-text-field>
               <v-text-field
@@ -42,7 +40,6 @@
                 :counter="32"
                 label="Password"
                 required
-                :value="registerPassword"
                 @input="setRegisterPassword"
               ></v-text-field>
               <v-text-field
@@ -106,7 +103,7 @@ export default {
     ...mapMutations("Authentication", [
       "setRegisterEmail",
       "setRegisterPassword",
-      "setRegisterLogin"    
+      "setRegisterLogin"
     ]),
     ...mapActions("Authentication", ["register"]),
     validError() {

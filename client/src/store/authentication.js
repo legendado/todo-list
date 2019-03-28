@@ -8,7 +8,10 @@ export default {
         registerLogin: null,
         registerPassword: null,
         registerError: null,
-        token: null
+        token: null,
+        loginEmail: null,
+        loginPassword: null,
+        loginError: null
     },
     getters: {
         isLoggedIn(state) {
@@ -19,9 +22,6 @@ export default {
         setRegisterError(state, error) {
             state.registerError = error
         },
-        setToken(state, token) {
-            state.token = token
-        },
         setRegisterEmail(state, email) {
             state.registerEmail = email
         },
@@ -30,9 +30,33 @@ export default {
         },
         setRegisterLogin(state, login) {
             state.registerLogin = login
+        },
+        setToken(state, token) {
+            state.token = token
+        },
+        setLoginEmail(state, email) {
+            state.loginEmail = email
+        },
+        setLoginPassword(state, password) {
+            state.loginPassword = password
+        },
+        setLoginError(state, error) {
+            state.loginError = error
         }
     },
     actions: {
+        login({ commit, state }) {
+            commit('setLoginError', null)
+            return http().post('/auth/login', {
+                email: state.loginEmail,                
+                password: state.loginPassword
+            }).then(({ data }) => {
+                commit('setToken', data.token)
+                router.push('/')
+            }).catch(() => {
+                commit('setLoginError', 'Cannot find account. Try again!')
+            })
+        },
         logout({ commit }) {
             commit('setToken', null)
             router.push('/login')
