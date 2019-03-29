@@ -35,4 +35,8 @@ export default {
   color: #2c3e50;
   background-image: linear-gradient(180deg, #cccaca, rgb(238, 136, 20));
 }
+.br {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
 </style>

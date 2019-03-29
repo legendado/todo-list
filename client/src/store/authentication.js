@@ -52,7 +52,7 @@ export default {
                 password: state.loginPassword
             }).then(({ data }) => {
                 commit('setToken', data.token)
-                router.push('/')
+                router.push('/projects')
             }).catch(() => {
                 commit('setLoginError', 'Cannot find account. Try again!')
             })
@@ -69,7 +69,7 @@ export default {
                 password: state.registerPassword
             }).then(({ data }) => {
                 commit('setToken', data.token)
-                router.push('/')
+                router.push('/projects')
             }).catch(() => {
                 commit('setRegisterError', 'Account is already exist.')
             })

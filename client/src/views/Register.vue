@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid fill-height v-if="!isLoggedIn">
     <v-snackbar
       :color="color"
       absolute
@@ -11,8 +11,8 @@
 
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6 lg4>
-        <v-card class="elevation-12">
-          <v-toolbar color="primary" dark>
+        <v-card class="elevation-12" id="br">
+          <v-toolbar color="primary" dark dense>
             <v-toolbar-title>Register</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
@@ -68,13 +68,20 @@
       </v-flex>
     </v-layout>
   </v-container>
+  <v-container v-else>
+    <wrong-route />
+  </v-container>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+import WrongRoute from '../components/WrongRoute.vue'
 
 export default {
   name: "Register",
+  components: {
+    WrongRoute
+  },
   data() {
     return {
       confirmPassword: "",
@@ -118,10 +125,17 @@ export default {
       "registerPassword",
       "registerLogin",
       "registerError"
+    ]),
+    ...mapGetters('Authentication', [
+      'isLoggedIn'
     ])
   }
 };
 </script>
 
-<style scope>
+<style scoped>
+#br {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
 </style>
