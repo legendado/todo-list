@@ -1,5 +1,6 @@
 import createPersistedState from 'vuex-persistedstate'
 import Authentication from './authentication'
+import Projects from './projects'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     createPersistedState()
   ],
   modules: {
-    Authentication
+    Authentication,
+    Projects
   }
 })

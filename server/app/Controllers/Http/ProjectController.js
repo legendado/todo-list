@@ -1,6 +1,7 @@
 'use strict'
 
 const Project = use('App/Models/Project')
+const Task = use('App/Models/Task')
 const AuthorizationService = use('App/Services/AuthorizationService')
 
 class ProjectController {
@@ -28,6 +29,7 @@ class ProjectController {
         await project.delete()
         return project
     }
+
 
     async update({ auth, request, params }) {
         const user = await auth.getUser()

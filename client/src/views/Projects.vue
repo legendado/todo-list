@@ -6,9 +6,13 @@
         <h1>SIMPLE TODO LIST</h1>
         <h4>FROM RUBY GARAGE</h4>
       </v-flex>
-      <project/>
+
+      <v-flex xs12 sm8 md8 lg8 pa-3 ma-3 v-for="project in projects" :key="project.id">
+        <project :title="project.name" :id="project.id"></project>
+      </v-flex>
+
       <v-flex xs12>
-        <v-btn color="primary">
+        <v-btn color="primary" @click="createProject()">
           <v-icon id="plus">fas fa-plus</v-icon>Add new project
         </v-btn>
       </v-flex>
@@ -17,21 +21,27 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 import Project from "../components/Project.vue";
 import router from "../router";
 
-export default {
+export default {  
   components: {
     Project
   },
   computed: {
-    ...mapGetters("Authentication", ["isLoggedIn"])
+    ...mapGetters("Authentication", ["isLoggedIn"]),
+    ...mapState("Projects", ["projectName", "projects"])
+  },
+  methods: {
+    ...mapActions("Projects", ["createProject", "fetchProjects"])
   },
   mounted() {
     if (!this.isLoggedIn) {
       router.push("/login");
+      return;
     }
+    this.fetchProjects();
   }
 };
 </script>
