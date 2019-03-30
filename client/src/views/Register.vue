@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height v-if="!isLoggedIn">
+  <v-container fluid fill-height>
     <v-snackbar
       :color="color"
       absolute
@@ -68,20 +68,14 @@
       </v-flex>
     </v-layout>
   </v-container>
-  <v-container v-else>
-    <wrong-route />
-  </v-container>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
-import WrongRoute from '../components/WrongRoute.vue'
+import router from "../router";
 
 export default {
   name: "Register",
-  components: {
-    WrongRoute
-  },
   data() {
     return {
       confirmPassword: "",
@@ -110,7 +104,8 @@ export default {
     ...mapMutations("Authentication", [
       "setRegisterEmail",
       "setRegisterPassword",
-      "setRegisterLogin"
+      "setRegisterLogin",
+      "setRegisterError"
     ]),
     ...mapActions("Authentication", ["register"]),
     validError() {
@@ -126,9 +121,13 @@ export default {
       "registerLogin",
       "registerError"
     ]),
-    ...mapGetters('Authentication', [
-      'isLoggedIn'
-    ])
+    ...mapGetters("Authentication", ["isLoggedIn"])
+  },
+  mounted() {
+    this.setRegisterError(null)
+    if (this.isLoggedIn) {
+      router.push("/projects");
+    }
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height v-if="!isLoggedIn">
+  <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6 lg4>
         <v-card class="elevation-12" id="br">
@@ -10,7 +10,7 @@
             <v-form>
               <v-text-field
                 type="text"
-                prepend-icon="person"                
+                prepend-icon="person"
                 label="Email"
                 required
                 @input="setLoginEmail"
@@ -18,7 +18,7 @@
               ></v-text-field>
               <v-text-field
                 type="password"
-                prepend-icon="lock"               
+                prepend-icon="lock"
                 label="Password"
                 required
                 @input="setLoginPassword"
@@ -42,29 +42,30 @@
       </v-flex>
     </v-layout>
   </v-container>
-  <v-container v-else>
-    <wrong-route />
-  </v-container>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
-import WrongRoute from '../components/WrongRoute.vue'
+import router from "../router";
 
 export default {
-  name: "Login", 
-  components: {
-    WrongRoute
-  },
+  name: "Login",
   methods: {
     ...mapMutations("Authentication", ["setLoginEmail", "setLoginPassword"]),
-    ...mapActions("Authentication", ["login"])   
+    ...mapActions("Authentication", ["login"])
   },
   computed: {
-    ...mapState("Authentication", ["loginEmail", "loginPassword", "loginError"]),
-     ...mapGetters('Authentication', [
-      'isLoggedIn'
-    ])
+    ...mapState("Authentication", [
+      "loginEmail",
+      "loginPassword",
+      "loginError"
+    ]),
+    ...mapGetters("Authentication", ["isLoggedIn"])
+  },
+  mounted() {
+    if (this.isLoggedIn) {
+      router.push("/projects");
+    }
   }
 };
 </script>
