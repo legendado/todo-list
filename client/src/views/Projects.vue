@@ -8,7 +8,7 @@
       </v-flex>
 
       <v-flex xs12 sm8 md8 lg8 pa-3 ma-3 v-for="project in projects" :key="project.id">
-        <project :title="project.name" :id="project.id"></project>
+        <project :project="project"></project>
       </v-flex>
 
       <v-flex xs12>
@@ -25,13 +25,14 @@ import { mapGetters, mapState, mapActions } from "vuex";
 import Project from "../components/Project.vue";
 import router from "../router";
 
-export default {  
+export default {
   components: {
     Project
   },
   computed: {
     ...mapGetters("Authentication", ["isLoggedIn"]),
-    ...mapState("Projects", ["projectName", "projects"])
+    ...mapState("Projects", ["projects"]),
+    ...mapState("Tasks", ["allTasks"])
   },
   methods: {
     ...mapActions("Projects", ["createProject", "fetchProjects"])

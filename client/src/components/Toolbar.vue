@@ -1,5 +1,6 @@
 <template>
   <v-toolbar app absolute>
+    <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title>TODO List</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
@@ -15,10 +16,7 @@
       </v-btn>
       <v-btn flat v-if="isLoggedIn" @click="logout">
         <v-icon size="20px" class="mr-1">exit_to_app</v-icon>Logout
-      </v-btn>
-      <v-btn icon class="overflow-hidden">
-        <v-icon>home</v-icon>
-      </v-btn>
+      </v-btn>      
     </v-toolbar-items>
   </v-toolbar>
 </template>

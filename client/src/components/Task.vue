@@ -12,12 +12,12 @@
           </v-list-tile-content>
 
           <v-list-tile-action class="btn">
-            <v-btn icon @click="log(task.id)">
+            <v-btn icon>
               <v-icon size="14px">fas fa-pencil-alt</v-icon>
             </v-btn>
           </v-list-tile-action>
           <v-list-tile-action class="btn">
-            <v-btn icon @click="log(task.id)">
+            <v-btn icon>
               <v-icon size="14px">fas fa-trash-alt</v-icon>
             </v-btn>
           </v-list-tile-action>
@@ -29,35 +29,7 @@
 
 <script>
 export default {
-  data() {
-    return {
-      tasks: [
-        {
-          id: 1,
-          status: 0,
-          name: "task1"
-        },
-        {
-          id: 2,
-          status: true,
-          name: "task2"
-        },
-        {
-          id: 3,
-          status: 1,
-          name: "task3"
-        }
-      ]
-    };
-  },
-  methods: {
-    show(task) {
-      console.log(task);
-    },
-    log(name) {
-      console.log(name);
-    }
-  }
+  props: ["tasks"]  
 };
 </script>
 

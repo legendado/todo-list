@@ -5,12 +5,13 @@ export default {
     namespaced: true,
     state: {
         projects: [],
-        projectName: 'New project'
-    },
-    getters: {
-
-    },
+        projectName: 'New project',
+        newProjectName: null
+    },    
     mutations: {
+        setNewProjectName(state, name) {
+            state.newProjectName = name
+        },
         setProjectName(state, name) {
             state.projectName = name
         },
@@ -19,6 +20,9 @@ export default {
         },
         setProject(state, projects) {
             state.projects = projects
+        },
+        deleteProject(state, project) {
+            state.projects.splice(state.projects.indexOf(project), 1)
         }
     },
     actions: {
@@ -34,6 +38,17 @@ export default {
             }).then(({ data }) => {
                 commit('appendProject', data)
             })
+        },
+        updateProject({ state }, id) {
+            return http().patch(`/projects/${id}`, {
+                name: state.newProjectName
+            })
+        },
+        deleteProject({ commit }, project) {
+            return http().delete(`/projects/${project.id}`)
+                .then(() => {
+                    commit('deleteProject', project)
+                })
         }
     }
 }
