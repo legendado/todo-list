@@ -3,11 +3,11 @@ import router from '../router'
 
 export default {
     namespaced: true,
-    state: {
-        projects: [],
+    state: {        
         projectName: 'New project',
-        newProjectName: null
-    },    
+        newProjectName: null,
+        projects: []        
+    },
     mutations: {
         setNewProjectName(state, name) {
             state.newProjectName = name
@@ -16,22 +16,45 @@ export default {
             state.projectName = name
         },
         appendProject(state, project) {
-            state.projects.push(project)
-        },
-        setProject(state, projects) {
-            state.projects = projects
-        },
-        deleteProject(state, project) {
+            const proj = {
+                project: project,
+                task: []
+            }
+            state.projects.push(proj)
+        },        
+        deleteProject(state, id) {
+            const project = state.projects.find(x => x.project.id === id)
             state.projects.splice(state.projects.indexOf(project), 1)
+        },
+        // new 
+        clearProject(state) {
+            state.projects = []
+        },    
+        setProject(state, data) {            
+            state.projects.push(data)
         }
     },
     actions: {
-        fetchProjects({ commit, state }) {
-            state.projects = null
-            return http().get('/projects').then(({ data }) => {
-                commit('setProject', data)
+        getProjects({ commit }) {
+            commit('clearProject')           
+            return http().get('/projects').then(({ data }) => { 
+                data.forEach(project => {
+                    http().get(`/projects/${project.id}/tasks`).then(({ data }) => {                                                 
+                        const mainObject = {
+                            project: project,
+                            task: data
+                        }                        
+                        commit('setProject', mainObject)
+                    })
+                })
             })
         },
+        // fetchProjects({ commit, state }) {
+        //     state.projects = null
+        //     return http().get('/projects').then(({ data }) => {
+        //         commit('setProject', data)
+        //     })
+        // },
         createProject({ commit, state }) {
             return http().post('/projects', {
                 name: state.projectName
@@ -44,10 +67,10 @@ export default {
                 name: state.newProjectName
             })
         },
-        deleteProject({ commit }, project) {
-            return http().delete(`/projects/${project.id}`)
-                .then(() => {
-                    commit('deleteProject', project)
+        deleteProject({ commit }, id) {  
+            return http().delete(`/projects/${id}`)
+                .then(() => {                    
+                    commit('deleteProject', id)
                 })
         }
     }

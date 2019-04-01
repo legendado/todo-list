@@ -7,8 +7,8 @@
         <h4>FROM RUBY GARAGE</h4>
       </v-flex>
 
-      <v-flex xs12 sm8 md8 lg8 pa-3 ma-3 v-for="project in projects" :key="project.id">
-        <project :project="project"></project>
+      <v-flex xs12 sm8 md8 lg8 pa-3 ma-3 v-for="element in projects" :key="element.project.id">
+        <one-project :project="element.project" :tasks="element.task"></one-project>
       </v-flex>
 
       <v-flex xs12>
@@ -22,27 +22,26 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
-import Project from "../components/Project.vue";
+import OneProject from "../components/OneProject.vue";
 import router from "../router";
 
-export default {
+export default {  
   components: {
-    Project
+    OneProject
   },
   computed: {
     ...mapGetters("Authentication", ["isLoggedIn"]),
-    ...mapState("Projects", ["projects"]),
-    ...mapState("Tasks", ["allTasks"])
+    ...mapState("Projects", ["projects"])
   },
   methods: {
-    ...mapActions("Projects", ["createProject", "fetchProjects"])
+    ...mapActions("Projects", ["createProject", "getProjects"])
   },
   mounted() {
     if (!this.isLoggedIn) {
       router.push("/login");
       return;
-    }
-    this.fetchProjects();
+    }    
+    this.getProjects();
   }
 };
 </script>

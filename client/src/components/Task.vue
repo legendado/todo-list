@@ -29,7 +29,8 @@
 
 <script>
 export default {
-  props: ["tasks"]  
+  name: "Task",
+  props: ["tasks"] 
 };
 </script>
 
