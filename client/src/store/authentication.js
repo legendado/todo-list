@@ -4,8 +4,7 @@ import router from '../router'
 export default {
     namespaced: true,
     state: {
-        registerEmail: null,
-        registerLogin: null,
+        registerEmail: null,        
         registerPassword: null,
         registerError: null,
         token: null,
@@ -48,7 +47,7 @@ export default {
         login({ commit, state }) {
             commit('setLoginError', null)
             return http().post('/auth/login', {
-                email: state.loginEmail,                
+                email: state.loginEmail.toLowerCase(),                
                 password: state.loginPassword
             }).then(({ data }) => {
                 commit('setToken', data.token)
@@ -64,8 +63,8 @@ export default {
         register({ commit, state }) {
             commit('setRegisterError', null)
             return http().post('/auth/register', {
-                email: state.registerEmail,
-                username: state.registerLogin,
+                email: state.registerEmail.toLowerCase(),
+                username: state.registerEmail,
                 password: state.registerPassword
             }).then(({ data }) => {
                 commit('setToken', data.token)

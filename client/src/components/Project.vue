@@ -3,7 +3,7 @@
     <v-toolbar dense flat color="primary" slot-scope="{ hover }">
       <v-icon>far fa-file-alt</v-icon>
       <v-toolbar-title id="title">
-        <span v-if="!isEditProject">{{ project.name }}</span>
+        <span v-if="cliecked? false : true">{{ project.name }}</span>
         <v-text-field
           v-else
           solo
@@ -11,15 +11,16 @@
           autofocus
           :value="project.name"
           @input="setNewProjectName"
-          @keyup.enter="save()"
+          @keyup.enter="save(true)"
+          @keyup.esc="save(false)"
         ></v-text-field>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="hover">
-        <v-btn icon @click="editProjecName()" v-show="!isEditProject">
+        <v-btn v-if="!isEditProject" icon @click="editProjecName()" v-show="!isEditProject">
           <v-icon size="14px">fas fa-pencil-alt</v-icon>
         </v-btn>
-        <v-btn icon @click="deleteProj()" v-show="!isEditProject">
+        <v-btn v-if="!isEditProject" icon @click="deleteProj()" v-show="!isEditProject">
           <v-icon size="14px">fas fa-trash-alt</v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -35,29 +36,33 @@ export default {
   props: ["project"],
   data() {
     return {
-      isEditProject: false
+      cliecked: false
     };
   },
   methods: {
     ...mapActions("Projects", ["updateProject", "deleteProject"]),
-    ...mapMutations("Projects", ["setNewProjectName"]),
+    ...mapMutations("Projects", ["setNewProjectName", "setIsEditProject"]),
     editProjecName() {
       this.setNewProjectName(null);
       this.setNewProjectName(this.project.name);
-      this.isEditProject = !this.isEditProject;
+      this.cliecked = !this.cliecked;
+      this.setIsEditProject(true)
     },
-    save() {
-      this.updateProject(this.project.id);
-      this.project.name = this.newProjectName;
+    save(value) {
+      if (value) {
+        this.updateProject(this.project.id);
+        this.project.name = this.newProjectName;        
+      }
       this.setNewProjectName(null);
-      this.isEditProject = !this.isEditProject;
+      this.cliecked = !this.cliecked;
+      this.setIsEditProject(false)
     },
     deleteProj() {
       this.deleteProject(this.project.id);
     }
   },
   computed: {
-    ...mapState("Projects", ["newProjectName"])
+    ...mapState("Projects", ["newProjectName", "isEditProject"])
   }
 };
 </script>

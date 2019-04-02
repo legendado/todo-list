@@ -17,14 +17,14 @@
           </v-toolbar>
           <v-card-text>
             <v-form v-model="valid" ref="form">
-              <v-text-field
+              <!-- <v-text-field
                 type="text"
                 prepend-icon="person"
                 label="Login"
                 required
                 :rules="loginRules"
                 @input="setRegisterLogin"
-              ></v-text-field>
+              ></v-text-field> -->
               <v-text-field
                 type="text"
                 prepend-icon="email"
@@ -103,8 +103,7 @@ export default {
   methods: {
     ...mapMutations("Authentication", [
       "setRegisterEmail",
-      "setRegisterPassword",
-      "setRegisterLogin",
+      "setRegisterPassword",      
       "setRegisterError"
     ]),
     ...mapActions("Authentication", ["register"]),

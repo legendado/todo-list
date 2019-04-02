@@ -5,6 +5,7 @@ export default {
     namespaced: true,
     state: {
         projectName: 'New project', // defaul name for new project 
+        isEditProject: false,
         newProjectName: null, // updating name for project
         newTaskName: null, // name of task before adding
         editTaskName: null, // name of task while editing
@@ -14,6 +15,9 @@ export default {
     },
     mutations: {
         // for Projecs
+        setIsEditProject(state, value) {
+            state.isEditProject = value
+        },
         setNewProjectName(state, name) {
             state.newProjectName = name
         },
@@ -27,8 +31,8 @@ export default {
             }
             state.projects.push(proj)
         },
-        deleteProject(state, id) {
-            const project = state.projects.find(x => x.project.id === id)
+        deleteProject(state, data) {
+            const project = state.projects.find(x => x.project.id === data.id)
             state.projects.splice(state.projects.indexOf(project), 1)
         },
         clearProject(state) {
@@ -64,8 +68,8 @@ export default {
         }
     },
     actions: {
-        getProjects({ commit }) {
-            commit('clearProject')
+        async getProjects({ commit }) {
+            await commit('clearProject')
             return http().get('/projects').then(({ data }) => {
                 data.forEach(project => {
                     http().get(`/projects/${project.id}/tasks`).then(({ data }) => {
