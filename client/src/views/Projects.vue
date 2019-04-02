@@ -42,7 +42,7 @@ export default {
       router.push("/login");
       return;
     }
-    this.setEditTask(false)
+    this.setEditTask(false);
     this.getProjects();
   }
 };

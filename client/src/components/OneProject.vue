@@ -31,7 +31,7 @@ export default {
         return;
       }
       this.setNewTaskName(this.taskName);
-      this.taskName = ""
+      this.taskName = "";
       this.createTask(this.project.id);
     }
   },

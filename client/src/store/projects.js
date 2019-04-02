@@ -4,17 +4,17 @@ import http from '../http'
 export default {
     namespaced: true,
     state: {
-        projectName: 'New project',
-        newProjectName: null,
-        newTaskName: null,
-        editTaskName: null,
+        projectName: 'New project', // defaul name for new project 
+        newProjectName: null, // updating name for project
+        newTaskName: null, // name of task before adding
+        editTaskName: null, // name of task while editing
         EditTask: false,
+        status: null,
         projects: []
     },
     mutations: {
         // for Projecs
         setNewProjectName(state, name) {
-            console.log("?????");
             state.newProjectName = name
         },
         setProjectName(state, name) {
@@ -39,15 +39,28 @@ export default {
         },
 
         // for Tasks
+        setStatus(state, value) {
+            state.status = value
+        },
         setEditTask(state, value) {
             state.EditTask = value
         },
         setNewTaskName(state, name) {
-            console.log("?????");
+            state.newTaskName = name
+        },
+        setEditTaskName(state, name) {
             state.editTaskName = name
         },
         createTask(state, newTask) {
             state.projects.find(x => x.project.id === newTask.project_id).task.push(newTask)
+        },
+        deleteTask(state, data) {
+            const dropped = state.projects.find(x => x.project.id === data.project_id).task.find(x => x.id === data.id)
+            state.projects.find(x => x.project.id === data.project_id).task.splice(
+                state.projects.find(x => x.project.id === data.project_id).task.indexOf(dropped), 1
+            )
+            // console.log(state.projects.find(x => x.project.id === data.project_id).task);
+
         }
     },
     actions: {
@@ -74,7 +87,22 @@ export default {
                 commit('createTask', data)
             })
         },
-
+        updateTask({ state }, id) {
+            return http().patch(`/tasks/${id}`, {
+                name: state.editTaskName
+            })
+        },
+        updateStatus({ commit, state }, id) {
+            return http().patch(`/tasks/${id}`, {
+                status: state.status
+            })
+        },
+        deleteTask({ commit }, id) {
+            return http().delete(`/tasks/${id}`)
+                .then(({ data }) => {
+                    commit('deleteTask', data)
+                })
+        },
         // Actions for project
 
         createProject({ commit, state }) {
@@ -91,8 +119,8 @@ export default {
         },
         deleteProject({ commit }, id) {
             return http().delete(`/projects/${id}`)
-                .then(() => {
-                    commit('deleteProject', id)
+                .then(({ data }) => {
+                    commit('deleteProject', data)
                 })
         }
     }

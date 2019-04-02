@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import OneTask from "@/components/OneTask";
 
 export default {
@@ -17,7 +18,10 @@ export default {
   components: {
     OneTask
   },
-  props: ["tasks"]
+  props: ["tasks"],
+  // computed: {
+  //   ...mapState("Projects", ["projects"])
+  // }
 };
 </script>
 

@@ -21,6 +21,6 @@ export default new Vuex.Store({
   ],
   modules: {
     Authentication,
-    Projects     
+    Projects
   }
 })
