@@ -1,36 +1,23 @@
 <template>
   <v-hover>
-    <v-list>
-      <template v-for="task in tasks">
-        <v-list-tile :key="task.id">
-          <v-list-tile-action>
-            <v-checkbox id="task.id" v-model="task.status"></v-checkbox>
-          </v-list-tile-action>
-
-          <v-list-tile-content>
-            <v-list-tile-title :key="task.name">{{ task.name }}</v-list-tile-title>
-          </v-list-tile-content>
-
-          <v-list-tile-action class="btn">
-            <v-btn icon>
-              <v-icon size="14px">fas fa-pencil-alt</v-icon>
-            </v-btn>
-          </v-list-tile-action>
-          <v-list-tile-action class="btn">
-            <v-btn icon>
-              <v-icon size="14px">fas fa-trash-alt</v-icon>
-            </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
+    <v-slide-y-transition class="py-0" group tag="v-list">
+      <template v-for="(task, i) in tasks">
+        <v-divider :key="`${i}-tdivider`"></v-divider>
+        <one-task :task="task" :key="task.id"></one-task>
       </template>
-    </v-list>
+    </v-slide-y-transition>
   </v-hover>
 </template>
 
 <script>
+import OneTask from "@/components/OneTask";
+
 export default {
   name: "Task",
-  props: ["tasks"] 
+  components: {
+    OneTask
+  },
+  props: ["tasks"]
 };
 </script>
 

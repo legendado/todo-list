@@ -1,6 +1,6 @@
 <template>
   <v-hover>
-    <v-toolbar flat color="primary" slot-scope="{ hover }">
+    <v-toolbar dense flat color="primary" slot-scope="{ hover }">
       <v-icon>far fa-file-alt</v-icon>
       <v-toolbar-title id="title">
         <span v-if="!isEditProject">{{ project.name }}</span>

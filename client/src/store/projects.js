@@ -1,15 +1,20 @@
 import http from '../http'
-import router from '../router'
+// import router from '../router'
 
 export default {
     namespaced: true,
-    state: {        
+    state: {
         projectName: 'New project',
         newProjectName: null,
-        projects: []        
+        newTaskName: null,
+        editTaskName: null,
+        EditTask: false,
+        projects: []
     },
     mutations: {
+        // for Projecs
         setNewProjectName(state, name) {
+            console.log("?????");
             state.newProjectName = name
         },
         setProjectName(state, name) {
@@ -21,40 +26,57 @@ export default {
                 task: []
             }
             state.projects.push(proj)
-        },        
+        },
         deleteProject(state, id) {
             const project = state.projects.find(x => x.project.id === id)
             state.projects.splice(state.projects.indexOf(project), 1)
         },
-        // new 
         clearProject(state) {
             state.projects = []
-        },    
-        setProject(state, data) {            
+        },
+        setProject(state, data) {
             state.projects.push(data)
+        },
+
+        // for Tasks
+        setEditTask(state, value) {
+            state.EditTask = value
+        },
+        setNewTaskName(state, name) {
+            console.log("?????");
+            state.editTaskName = name
+        },
+        createTask(state, newTask) {
+            state.projects.find(x => x.project.id === newTask.project_id).task.push(newTask)
         }
     },
     actions: {
         getProjects({ commit }) {
-            commit('clearProject')           
-            return http().get('/projects').then(({ data }) => { 
+            commit('clearProject')
+            return http().get('/projects').then(({ data }) => {
                 data.forEach(project => {
-                    http().get(`/projects/${project.id}/tasks`).then(({ data }) => {                                                 
+                    http().get(`/projects/${project.id}/tasks`).then(({ data }) => {
                         const mainObject = {
                             project: project,
                             task: data
-                        }                        
+                        }
                         commit('setProject', mainObject)
                     })
                 })
             })
         },
-        // fetchProjects({ commit, state }) {
-        //     state.projects = null
-        //     return http().get('/projects').then(({ data }) => {
-        //         commit('setProject', data)
-        //     })
-        // },
+
+        // Action for task
+        createTask({ commit, state }, id) {
+            return http().post(`/projects/${id}/tasks`, {
+                name: state.newTaskName
+            }).then(({ data }) => {
+                commit('createTask', data)
+            })
+        },
+
+        // Actions for project
+
         createProject({ commit, state }) {
             return http().post('/projects', {
                 name: state.projectName
@@ -67,9 +89,9 @@ export default {
                 name: state.newProjectName
             })
         },
-        deleteProject({ commit }, id) {  
+        deleteProject({ commit }, id) {
             return http().delete(`/projects/${id}`)
-                .then(() => {                    
+                .then(() => {
                     commit('deleteProject', id)
                 })
         }

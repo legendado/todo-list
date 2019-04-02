@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions, mapMutations } from "vuex";
 import OneProject from "../components/OneProject.vue";
 import router from "../router";
 
-export default {  
+export default {
   components: {
     OneProject
   },
@@ -34,13 +34,15 @@ export default {
     ...mapState("Projects", ["projects"])
   },
   methods: {
+    ...mapMutations("Projects", ["setEditTask"]),
     ...mapActions("Projects", ["createProject", "getProjects"])
   },
   mounted() {
     if (!this.isLoggedIn) {
       router.push("/login");
       return;
-    }    
+    }
+    this.setEditTask(false)
     this.getProjects();
   }
 };
