@@ -1,5 +1,6 @@
 # TODO-app
 Test task: TODO-list by Alexey Dmitriev
+Using stack: Adonis.js + Vue.js + SQLite3
 
 ## SQL Task:
 
