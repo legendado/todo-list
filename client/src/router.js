@@ -18,7 +18,7 @@ export default new Router({
       component: Register
      },
      {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: Login
      },
@@ -27,10 +27,10 @@ export default new Router({
       name: 'projects',
       component: Projects
      },
-     {
-      path: '/',
-      name: 'home',
-      component: Home
-     }  
+    //  {
+    //   path: '/',
+    //   name: 'home',
+    //   component: Home
+    //  }  
   ]
 })

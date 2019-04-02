@@ -7,14 +7,17 @@
       </v-container>
     </v-content>
     <footer class="foo">
-      &copy;
-      <strong>Ruby Garage</strong>
+      <v-icon id="git">fab fa-github</v-icon>
+      <strong>
+        <a id="link" href="http://github.com/legendado/">legendado</a>
+      </strong>
     </footer>
   </v-app>
 </template>
 
 <script>
 import Toolbar from "./components/Toolbar.vue";
+
 export default {
   components: {
     Toolbar
@@ -25,7 +28,7 @@ export default {
 <style lang="less">
 .foo {
   margin-bottom: 25px;
-  color: white;
+  color: white; 
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -40,3 +43,13 @@ export default {
   border-bottom-right-radius: 15px;
 }
 </style>
+
+<style scope>
+#link {
+  color: white;
+  text-decoration: none;
+  margin: 10px;
+}
+
+</style>
+

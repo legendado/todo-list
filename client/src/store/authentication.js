@@ -10,14 +10,14 @@ export default {
         token: null,
         loginEmail: null,
         loginPassword: null,
-        loginError: null
+        loginError: null      
     },
     getters: {
         isLoggedIn(state) {
             return !!state.token
         }
     },
-    mutations: {
+    mutations: {        
         setRegisterError(state, error) {
             state.registerError = error
         },
@@ -58,7 +58,7 @@ export default {
         },
         logout({ commit }) {
             commit('setToken', null)
-            router.push('/login')
+            router.push('/')
         },
         register({ commit, state }) {
             commit('setRegisterError', null)

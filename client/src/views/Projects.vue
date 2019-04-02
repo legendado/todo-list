@@ -39,7 +39,7 @@ export default {
   },
   mounted() {
     if (!this.isLoggedIn) {
-      router.push("/login");
+      router.push("/");
       return;
     }
     this.setEditTask(false);
