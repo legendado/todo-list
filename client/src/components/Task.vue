@@ -18,10 +18,7 @@ export default {
   components: {
     OneTask
   },
-  props: ["tasks"],
-  // computed: {
-  //   ...mapState("Projects", ["projects"])
-  // }
+  props: ["tasks"]  
 };
 </script>
 

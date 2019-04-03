@@ -50,6 +50,4 @@ export default {
   text-decoration: none;
   margin: 10px;
 }
-
 </style>
-

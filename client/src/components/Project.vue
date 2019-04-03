@@ -46,16 +46,16 @@ export default {
       this.setNewProjectName(null);
       this.setNewProjectName(this.project.name);
       this.cliecked = !this.cliecked;
-      this.setIsEditProject(true)
+      this.setIsEditProject(true);
     },
     save(value) {
       if (value) {
         this.updateProject(this.project.id);
-        this.project.name = this.newProjectName;        
+        this.project.name = this.newProjectName;
       }
       this.setNewProjectName(null);
       this.cliecked = !this.cliecked;
-      this.setIsEditProject(false)
+      this.setIsEditProject(false);
     },
     deleteProj() {
       this.deleteProject(this.project.id);

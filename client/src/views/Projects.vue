@@ -26,6 +26,7 @@ import OneProject from "../components/OneProject.vue";
 import router from "../router";
 
 export default {
+  name: "Projects",
   components: {
     OneProject
   },

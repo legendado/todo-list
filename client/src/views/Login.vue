@@ -51,7 +51,11 @@ import router from "../router";
 export default {
   name: "Login",
   methods: {
-    ...mapMutations("Authentication", ["setLoginEmail", "setLoginPassword", "setLoginError"]),
+    ...mapMutations("Authentication", [
+      "setLoginEmail",
+      "setLoginPassword",
+      "setLoginError"
+    ]),
     ...mapActions("Authentication", ["login"])
   },
   computed: {
@@ -63,7 +67,7 @@ export default {
     ...mapGetters("Authentication", ["isLoggedIn"])
   },
   mounted() {
-    this.setLoginError(null)
+    this.setLoginError(null);
     if (this.isLoggedIn) {
       router.push("/projects");
     }

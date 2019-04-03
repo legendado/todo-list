@@ -1,14 +1,13 @@
 import http from '../http'
-// import router from '../router'
 
 export default {
     namespaced: true,
     state: {
-        projectName: 'New project', // defaul name for new project 
+        projectName: 'New project',
         isEditProject: false,
-        newProjectName: null, // updating name for project
-        newTaskName: null, // name of task before adding
-        editTaskName: null, // name of task while editing
+        newProjectName: null,
+        newTaskName: null,
+        editTaskName: null,
         EditTask: false,
         status: null,
         projects: []
@@ -63,8 +62,6 @@ export default {
             state.projects.find(x => x.project.id === data.project_id).task.splice(
                 state.projects.find(x => x.project.id === data.project_id).task.indexOf(dropped), 1
             )
-            // console.log(state.projects.find(x => x.project.id === data.project_id).task);
-
         }
     },
     actions: {

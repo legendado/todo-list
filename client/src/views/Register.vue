@@ -17,14 +17,6 @@
           </v-toolbar>
           <v-card-text>
             <v-form v-model="valid" ref="form">
-              <!-- <v-text-field
-                type="text"
-                prepend-icon="person"
-                label="Login"
-                required
-                :rules="loginRules"
-                @input="setRegisterLogin"
-              ></v-text-field> -->
               <v-text-field
                 type="text"
                 prepend-icon="email"
@@ -103,7 +95,7 @@ export default {
   methods: {
     ...mapMutations("Authentication", [
       "setRegisterEmail",
-      "setRegisterPassword",      
+      "setRegisterPassword",
       "setRegisterError"
     ]),
     ...mapActions("Authentication", ["register"]),
@@ -123,7 +115,7 @@ export default {
     ...mapGetters("Authentication", ["isLoggedIn"])
   },
   mounted() {
-    this.setRegisterError(null)
+    this.setRegisterError(null);
     if (this.isLoggedIn) {
       router.push("/projects");
     }
