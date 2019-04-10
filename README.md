@@ -24,12 +24,12 @@ SELECT p.name as [name], COUNT(t.id) as [count] FROM Projects as p LEFT JOIN Tas
 
 Get the count of all tasks in each project, order by project names:
 ```sql
-SELECT count(t.id), p.name FROM Tasks as t JOIN Projects as p ON p.id = t.project_id GROUP BY project_id ORDER BY p.name
+SELECT COUNT(t.id), p.name FROM Tasks as t JOIN Projects as p ON p.id = t.project_id GROUP BY project_id ORDER BY p.name
 ```
 
 Get the tasks for all projects having the name beginning with “N” letter:
 ```sql
-SELECT t1.name as task, t2.name as project FROM Tasks as t1, Projects as t2 WHERE t2.name LIKE "N%" AND t1.project_id = t2.id
+SELECT t.name as [task], p.name as [project] FROM Tasks as t INNER JOIN Projects as p ON t.project_id = p.id WHERE p.name LIKE "N%" AND 
 ```
 
 Get the list of all projects containing the “a” letter in the middle of the name, and show the tasks count near each project. Mention that there can exist projects without tasks and tasks with project_id=NULL:
