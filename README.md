@@ -19,12 +19,12 @@ SELECT DISTINCT status FROM Tasks ORDER BY status
 
 Get the count of all tasks in each project, order by tasks count descending:
 ```sql
-SELECT t1.name as project_name, count(t2.id) as count_tasks FROM Projects as t1 LEFT JOIN Tasks as t2 ON t2.project_id = t1.id GROUP BY project_name ORDER BY count_tasks DESC
+SELECT p.name as [name], COUNT(t.id) as [count] FROM Projects as p LEFT JOIN Tasks as t ON t.project_id = p.id GROUP BY name ORDER BY count DESC
 ```
 
 Get the count of all tasks in each project, order by project names:
 ```sql
-Select count(t1.id),t2.name From Tasks as t1 JOIN Projects as t2 ON t2.id = t1.project_id GROUP BY project_id ORDER BY t2.name
+SELECT count(t.id), p.name FROM Tasks as t JOIN Projects as p ON p.id = t.project_id GROUP BY project_id ORDER BY p.name
 ```
 
 Get the tasks for all projects having the name beginning with “N” letter:
@@ -34,19 +34,19 @@ SELECT t1.name as task, t2.name as project FROM Tasks as t1, Projects as t2 WHER
 
 Get the list of all projects containing the “a” letter in the middle of the name, and show the tasks count near each project. Mention that there can exist projects without tasks and tasks with project_id=NULL:
 ```sql
-SELECT t2.name as project, count(t1.id) as count_tasks FROM Projects as t2 LEFT JOIN Tasks as t1 on t1.project_id = t2.id WHERE t2.name LIKE "%a%" AND t2.name NOT LIKE "a%" AND t2.name NOT LIKE "%a" GROUP BY project
+SELECT p.name as [project], COUNT(t.id) as [count] FROM Projects as p LEFT JOIN Tasks as t on t.project_id = p.id WHERE p.name LIKE "%a%" AND p.name NOT LIKE "a%" AND p.name NOT LIKE "%a" GROUP BY project
 ```
 
 Get the list of tasks with duplicate names. Order alphabetically:
 ```sql
-SELECT name FROM Tasks GROUP BY name HAVING count(*)>1 ORDER BY name
+SELECT name FROM Tasks GROUP BY name HAVING COUNT(*) > 1 ORDER BY name
 ```
 
 Get the list of tasks having several exact matches of both name and status, from the project Garage. Order by matches count:
 ```sql
-SELECT t1.name, t1.status, COUNT(*) as task_count FROM Tasks as t1, Projects as t2 WHERE t2.name="Garage" AND t1.project_id = t2.id GROUP BY t1.name, t1.status HAVING count(*)>1 ORDER BY task_count
+SELECT t.name, t.status, COUNT(*) as [count] FROM Tasks as t, Projects as p WHERE p.name="Garage" AND t.project_id = p.id GROUP BY t.name, t.status HAVING COUNT(*) > 1 ORDER BY [count]
 ```
 
 Get the list of project names having more than 10 tasks in status completed. Order by project_id:
 ```sql
-SELECT t1.name FROM Projects as t1 Where t1.id IN (Select t2.project_id From Tasks as t2 Where t2.status = 0 HAVING count(*)>10) ORDER BY t1.id
+SELECT p.name FROM Projects as p WHERE p.id IN (SELECT t.project_id FROM Tasks as t Where t.status = 0 HAVING COUNT(*) > 10) ORDER BY p.id
