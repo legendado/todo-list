@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from './store/'
 
-export default () => {
+export default () => {     
     return axios.create({
         baseURL: `${process.env.VUE_APP_API}` || store.state.baseURL,
         timeout: 10000,
