@@ -14,10 +14,10 @@ class TaskController {
     }
 
     async create({ request, auth, params }) {
-        const user = await auth.getUser() // get user
-        const { name } = request.all() // get name of task
-        const { id } = params // get project id
-        const project = await Project.find(id) // find project 
+        const user = await auth.getUser() 
+        const { name } = request.all() 
+        const { id } = params 
+        const project = await Project.find(id) 
         AuthorizationService.verifyPermission(project, user)
         const task = new Task()
         task.fill({
